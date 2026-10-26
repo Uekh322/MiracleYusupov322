@@ -1,0 +1,16 @@
+﻿<Page x:Class="YusupovMiracle.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Вход в систему">
+    <Grid>
+        <StackPanel Width="500" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Вход в систему" FontSize="26" HorizontalAlignment="Center" Margin="10"/>
+            <TextBlock Text="Логин" Margin="5"/>
+            <TextBox Name="LoginTB" FontSize="20" Margin="5" Height="32"/>
+            <TextBlock Text="Для входа укажите свой логин из списка пользователей." TextWrapping="Wrap" Margin="5,10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Войти как гость" Name="LoginGuestBtn" Width="220" Click="LoginGuestBtn_Click"/>
+                <Button Content="Войти" Name="LoginBtn" Width="180" Click="LoginBtn_Click" IsDefault="True"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

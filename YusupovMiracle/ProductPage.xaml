@@ -1,0 +1,73 @@
+﻿<Page x:Class="YusupovMiracle.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Каталог товаров" Loaded="Page_Loaded">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel Background="#D2F6E7" Margin="0,0,0,10">
+            <Button DockPanel.Dock="Right" VerticalAlignment="Center" Content="Выйти" Click="LogoutBtn_Click"/>
+            <Button DockPanel.Dock="Right" VerticalAlignment="Center" Name="OrdersBtn" Content="Список заказов" Click="OrdersBtn_Click"/>
+            <StackPanel Margin="10">
+                <TextBlock Text="Каталог товаров" FontSize="24"/>
+                <TextBlock Name="FIOTB"/>
+                <TextBlock Name="RoleTB"/>
+            </StackPanel>
+        </DockPanel>
+        <StackPanel Grid.Row="1" Name="FilterPanel">
+            <WrapPanel Margin="0,0,0,5">
+                <TextBlock Text="Поиск по названию" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="250" Margin="5"/>
+                <TextBlock Text="Категория" VerticalAlignment="Center" Margin="5"/>
+                <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged" Width="180" Margin="5"/>
+                <TextBlock Text="Производитель" VerticalAlignment="Center" Margin="5"/>
+                <ComboBox Name="ComboManufacture" SelectionChanged="ComboType_SelectionChanged" Width="180" Margin="5"/>
+            </WrapPanel>
+            <WrapPanel Margin="5,0,0,10">
+                <TextBlock Text="Сортировка по цене: " Margin="0,0,10,0"/>
+                <RadioButton Content="По возрастанию" GroupName="Sort" Checked="RButtonUp_Checked" Name="RButtonUp" Margin="10,0"/>
+                <RadioButton Content="По убыванию" GroupName="Sort" Checked="RButtonDown_Checked" Name="RButtonDown" Margin="10,0"/>
+            </WrapPanel>
+        </StackPanel>
+        <ListView Name="ProductListView" Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{Binding ProductBackground}" Padding="8" Margin="0,3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="170"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="215"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding ProducPhotoPath}" Width="155" Height="155" Stretch="Uniform"/>
+                            <StackPanel Grid.Column="1" Margin="12,0">
+                                <TextBlock Text="{Binding ProductName}" FontSize="22" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock TextWrapping="Wrap"><Run Text="{Binding Category.CategoryName, Mode=OneWay}"/><Run Text=" / "/><Run Text="{Binding SubCategory.SubCategoryName, Mode=OneWay}"/></TextBlock>
+                                <TextBlock Text="{Binding Discription}" TextWrapping="Wrap" Margin="0,4"/>
+                                <TextBlock TextWrapping="Wrap"><Run Text="Состав: "/><Run Text="{Binding Compound, Mode=OneWay}"/></TextBlock>
+                                <TextBlock><Run Text="Производитель: "/><Run Text="{Binding Manufacture.Manufacture1, Mode=OneWay}"/></TextBlock>
+                                <TextBlock TextWrapping="Wrap"><Run Text="Размерный ряд: "/><Run Text="{Binding SizeRange, Mode=OneWay}"/></TextBlock>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Price, StringFormat={}{0:N2} ₽}" FontSize="23" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding ProductQuantityInStock, StringFormat=В наличии: {0} пар}" HorizontalAlignment="Center" Margin="0,5"/>
+                                <StackPanel Visibility="{Binding OrderControlsVisibility, RelativeSource={RelativeSource AncestorType=Page}}">
+                                    <TextBlock Text="Доступный размер" HorizontalAlignment="Center"/>
+                                    <ComboBox Name="SizeCombo" ItemsSource="{Binding AvailablePositions}" DisplayMemberPath="SizeText" SelectedIndex="0" Margin="5"/>
+                                    <Button Content="Добавить к заказу" Tag="{Binding SelectedItem, ElementName=SizeCombo}" Click="MenuItem_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <DockPanel Grid.Row="3" Margin="0,8,0,0">
+            <Button DockPanel.Dock="Right" Content="Просмотреть заказ" Name="OrderBTn" Click="OrderBTn_Click" Visibility="Collapsed"/>
+            <TextBlock Name="TBlockRecordCount" VerticalAlignment="Center" FontWeight="Bold"/>
+        </DockPanel>
+    </Grid>
+</Page>
