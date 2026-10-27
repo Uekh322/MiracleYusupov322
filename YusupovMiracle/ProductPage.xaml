@@ -9,7 +9,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel Background="#D2F6E7" Margin="0,0,0,10">
-            <Button DockPanel.Dock="Right" VerticalAlignment="Center" Content="Выйти" Click="LogoutBtn_Click"/>
+            <Button DockPanel.Dock="Right" VerticalAlignment="Center" Content="Выйти" Click="LogoutBtn_Click" Visibility="Collapsed"/>
             <Button DockPanel.Dock="Right" VerticalAlignment="Center" Name="OrdersBtn" Content="Список заказов" Click="OrdersBtn_Click"/>
             <StackPanel Margin="10">
                 <TextBlock Text="Каталог товаров" FontSize="24"/>
@@ -23,8 +23,8 @@
                 <TextBox Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" Width="250" Margin="5"/>
                 <TextBlock Text="Категория" VerticalAlignment="Center" Margin="5"/>
                 <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged" Width="180" Margin="5"/>
-                <TextBlock Text="Производитель" VerticalAlignment="Center" Margin="5"/>
-                <ComboBox Name="ComboManufacture" SelectionChanged="ComboType_SelectionChanged" Width="180" Margin="5"/>
+                <TextBlock Text="Производитель" VerticalAlignment="Center" Margin="5 "  Visibility="Collapsed"/>
+                <ComboBox Name="ComboManufacture" SelectionChanged="ComboType_SelectionChanged" Width="180" Margin="5" Visibility="Collapsed"/>
             </WrapPanel>
             <WrapPanel Margin="5,0,0,10">
                 <TextBlock Text="Сортировка по цене: " Margin="0,0,10,0"/>

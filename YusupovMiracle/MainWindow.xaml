@@ -12,6 +12,6 @@
         <Image Source="/image/logo.png" HorizontalAlignment="Left" Width="140" Margin="15,5" Stretch="Uniform"/>
         <TextBlock Text="Чудо Обувь" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Frame Grid.Row="1" Name="MainFrame" ContentRendered="MainFrame_ContentRendered" NavigationUIVisibility="Hidden"/>
-        <Button Content="Назад" Name="BtnBack" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" Click="BtnBack_Click"/>
+        <Button Content="Назад" Name="BtnBack" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" Click="BtnBack_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>

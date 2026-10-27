@@ -33,6 +33,15 @@ namespace YusupovMiracle
             ComboManufacture.DisplayMemberPath = "Manufacture1";
             ComboManufacture.SelectedIndex = 0;
             isReady = true;
+            if (user == null)
+            {
+                ComboType.Visibility = Visibility.Collapsed;
+                ComboManufacture.Visibility = Visibility.Collapsed;
+                TBoxSearch.Visibility = Visibility.Collapsed;
+                RButtonUp.Visibility = Visibility.Collapsed;
+                RButtonDown.Visibility = Visibility.Collapsed;
+               
+            }
             UpdateServices();
         }
 
@@ -102,5 +111,7 @@ namespace YusupovMiracle
             Manager.MainFrame.Navigate(new AuthPage());
             while (Manager.MainFrame.CanGoBack) Manager.MainFrame.RemoveBackEntry();
         }
+
+
     }
 }
