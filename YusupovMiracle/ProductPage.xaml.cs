@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace YusupovMiracle
 {
@@ -21,27 +20,18 @@ namespace YusupovMiracle
             InitializeComponent();
             FIOTB.Text = user == null ? "Гость" : user.FIO;
             RoleTB.Text = user == null ? "Гость" : user.UserRole.RoleName;
-            OrdersBtn.Visibility = user != null && (user.RoleID == 1 || user.RoleID == 3) ? Visibility.Visible : Visibility.Collapsed;
-            var categories = YusupovMiracleShowEntities.GetContext().Category.ToList();
-            categories.Insert(0, new Category { CategoryID = 0, CategoryName = "Все категории" });
-            ComboType.ItemsSource = categories;
-            ComboType.DisplayMemberPath = "CategoryName";
-            ComboType.SelectedIndex = 0;
-            var manufactures = YusupovMiracleShowEntities.GetContext().Manufacture.ToList();
-            manufactures.Insert(0, new Manufacture { ManufactureID = 0, Manufacture1 = "Все производители" });
-            ComboManufacture.ItemsSource = manufactures;
-            ComboManufacture.DisplayMemberPath = "Manufacture1";
-            ComboManufacture.SelectedIndex = 0;
-            isReady = true;
-            if (user == null)
+            OrdersBtn.Visibility = user != null && (user.RoleID == 1 || user.RoleID == 2) ? Visibility.Visible : Visibility.Collapsed;
+            AnalyticsBtn.Visibility = user != null && user.RoleID == 1 ? Visibility.Visible : Visibility.Collapsed;
+            FilterPanel.Visibility = OrderControlsVisibility;
+            if (user != null)
             {
-                ComboType.Visibility = Visibility.Collapsed;
-                ComboManufacture.Visibility = Visibility.Collapsed;
-                TBoxSearch.Visibility = Visibility.Collapsed;
-                RButtonUp.Visibility = Visibility.Collapsed;
-                RButtonDown.Visibility = Visibility.Collapsed;
-               
+                var categories = YusupovMiracleShowEntities.GetContext().Category.ToList();
+                categories.Insert(0, new Category { CategoryID = 0, CategoryName = "Все категории" });
+                ComboType.ItemsSource = categories;
+                ComboType.DisplayMemberPath = "CategoryName";
+                ComboType.SelectedIndex = 0;
             }
+            isReady = true;
             UpdateServices();
         }
 
@@ -62,15 +52,15 @@ namespace YusupovMiracle
                 .Include(p => p.Category).Include(p => p.SubCategory).Include(p => p.Manufacture)
                 .Include(p => p.CommodityPosition).ToList();
             int totalCount = currentServices.Count;
-            var category = ComboType.SelectedItem as Category;
-            if (category != null && category.CategoryID != 0)
-                currentServices = currentServices.Where(p => p.CategoryID == category.CategoryID).ToList();
-            var manufacture = ComboManufacture.SelectedItem as Manufacture;
-            if (manufacture != null && manufacture.ManufactureID != 0)
-                currentServices = currentServices.Where(p => p.ManufactureID == manufacture.ManufactureID).ToList();
-            currentServices = currentServices.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.Trim().ToLower())).ToList();
-            if (RButtonDown.IsChecked == true) currentServices = currentServices.OrderByDescending(p => p.Price).ToList();
-            if (RButtonUp.IsChecked == true) currentServices = currentServices.OrderBy(p => p.Price).ToList();
+            if (currentUser != null)
+            {
+                var category = ComboType.SelectedItem as Category;
+                if (category != null && category.CategoryID != 0)
+                    currentServices = currentServices.Where(p => p.CategoryID == category.CategoryID).ToList();
+                currentServices = currentServices.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.Trim().ToLower())).ToList();
+                if (RButtonDown.IsChecked == true) currentServices = currentServices.OrderByDescending(p => p.Price).ToList();
+                if (RButtonUp.IsChecked == true) currentServices = currentServices.OrderBy(p => p.Price).ToList();
+            }
             TBlockRecordCount.Text = $"Записей: {currentServices.Count} из {totalCount}";
             ProductListView.ItemsSource = currentServices.ToList();
         }
@@ -105,13 +95,10 @@ namespace YusupovMiracle
             Manager.MainFrame.Navigate(new OrdersPage(currentUser));
         }
 
-        private void LogoutBtn_Click(object sender, RoutedEventArgs e)
+        private void AnalyticsBtn_Click(object sender, RoutedEventArgs e)
         {
-            selectedOrderProducts.Clear();
-            Manager.MainFrame.Navigate(new AuthPage());
-            while (Manager.MainFrame.CanGoBack) Manager.MainFrame.RemoveBackEntry();
+            if (currentUser != null && currentUser.RoleID == 1)
+                Manager.MainFrame.Navigate(new AnalyticsPage(currentUser));
         }
-
-
     }
 }

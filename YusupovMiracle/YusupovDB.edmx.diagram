@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="YusupovMiracleShowModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="YusupovMiracleShowModel.Sizes" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="YusupovMiracleShowModel.SubCategory" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="YusupovMiracleShowModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="YusupovMiracleShowModel.UserRole" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
         <AssociationConnector Association="YusupovMiracleShowModel.FK_Product_Category1" ManuallyRouted="false" />
         <AssociationConnector Association="YusupovMiracleShowModel.FK_Client_UserRole" ManuallyRouted="false" />

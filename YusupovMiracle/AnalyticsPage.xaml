@@ -1,0 +1,41 @@
+﻿<Page x:Class="YusupovMiracle.AnalyticsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Аналитика" Loaded="Page_Loaded">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Аналитика продаж" FontSize="26" Margin="5,0,0,10"/>
+        <WrapPanel Grid.Row="1" Background="#D2F6E7">
+            <TextBlock Text="Дата начала" VerticalAlignment="Center" Margin="10,5,5,5"/>
+            <DatePicker x:Name="StartDate" Width="145" Margin="5" VerticalAlignment="Center"
+                        SelectedDateChanged="Period_Changed" DateValidationError="Period_Invalid"/>
+            <TextBlock Text="Дата окончания" VerticalAlignment="Center" Margin="10,5,5,5"/>
+            <DatePicker x:Name="EndDate" Width="145" Margin="5" VerticalAlignment="Center"
+                        SelectedDateChanged="Period_Changed" DateValidationError="Period_Invalid"/>
+            <Button x:Name="ExportBtn" Content="Экспорт в PDF" IsEnabled="False" Click="Export_Click"/>
+        </WrapPanel>
+        <TextBlock Grid.Row="2" x:Name="StatusText" Margin="5,8" TextWrapping="Wrap"
+                   AutomationProperties.LiveSetting="Polite"/>
+        <WrapPanel Grid.Row="3" Margin="5,0,5,12">
+            <TextBlock x:Name="OrderCountText" FontWeight="Bold" Margin="0,0,24,0"/>
+            <TextBlock x:Name="TotalSalesText" FontWeight="Bold"/>
+        </WrapPanel>
+        <TextBlock Grid.Row="4" Text="Топ-5 моделей по количеству проданных пар"
+                   FontSize="20" Margin="5,0,5,8"/>
+        <DataGrid Grid.Row="5" x:Name="TopModelsGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserAddRows="False" HeadersVisibility="Column" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Модель" Binding="{Binding Name}" Width="2*"/>
+                <DataGridTextColumn Header="Производитель" Binding="{Binding Manufacturer}" Width="*"/>
+                <DataGridTextColumn Header="Продано пар" Binding="{Binding Pairs}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

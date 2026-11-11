@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Navigation;
 
 namespace YusupovMiracle
 {
@@ -17,9 +17,15 @@ namespace YusupovMiracle
             if (MainFrame.CanGoBack) MainFrame.GoBack();
         }
 
-        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        private void MainFrame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            BtnBack.Visibility = MainFrame.CanGoBack ? Visibility.Visible : Visibility.Hidden;
+            if (MainFrame.Content is AuthPage && e.NavigationMode == NavigationMode.Forward)
+                e.Cancel = true;
+        }
+
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            BtnBack.Visibility = MainFrame.CanGoBack ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace YusupovMiracle
         public OrderWindow(List<OrderItem> orderProducts, Client user, Order order = null, bool onlyView = false)
         {
             if (user == null) throw new InvalidOperationException("Для оформления заказа войдите в систему.");
-            if (order != null && user.RoleID != 1 && user.RoleID != 3) throw new InvalidOperationException("Нет доступа к заказу.");
+            if (order != null && user.RoleID != 1 && user.RoleID != 2) throw new InvalidOperationException("Нет доступа к заказу.");
             currentUser = user;
             currentOrder = order;
             readOnly = onlyView || (order != null && user.RoleID != 1);
@@ -32,7 +32,7 @@ namespace YusupovMiracle
             var context = YusupovMiracleShowEntities.GetContext();
             ClientCombo.ItemsSource = context.Client.OrderBy(p => p.LastName).ToList();
             ClientCombo.SelectedItem = order == null ? user : order.Client;
-            ClientCombo.IsEnabled = !readOnly && (user.RoleID == 1 || user.RoleID == 3);
+            ClientCombo.IsEnabled = !readOnly && (user.RoleID == 1 || user.RoleID == 2);
             OrderDP.SelectedDate = order == null ? DateTime.Today : order.OrderDate;
             OrderDP.IsEnabled = !readOnly && user.RoleID == 1;
             TBOrderID.Text = order == null ? "Новый (номер присвоит база данных)" : order.OrderID.ToString();
@@ -140,7 +140,7 @@ namespace YusupovMiracle
                             "UPDATE CommodityPosition SET QuantityInStock = QuantityInStock - @p0 WHERE CommodityPositionID = @p1 AND QuantityInStock >= @p0", delta, positionID);
                         if (changed != 1) throw new InvalidOperationException("Недостаточно товара на складе. Обновите каталог и проверьте размеры.");
                     }
-                    savedOrder.ClientID = currentUser.RoleID == 2 ? currentUser.ClientID : client.ClientID;
+                    savedOrder.ClientID = currentUser.RoleID == 3 ? currentUser.ClientID : client.ClientID;
                     savedOrder.OrderDate = OrderDP.SelectedDate.Value.Date;
                     context.OrderItem.RemoveRange(oldItems);
                     foreach (var item in selectedOrderProducts)

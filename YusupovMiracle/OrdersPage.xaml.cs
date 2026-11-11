@@ -13,7 +13,7 @@ namespace YusupovMiracle
         private Client currentUser;
         public OrdersPage(Client user)
         {
-            if (user == null || (user.RoleID != 1 && user.RoleID != 3)) throw new InvalidOperationException("Нет доступа к списку заказов.");
+            if (user == null || (user.RoleID != 1 && user.RoleID != 2)) throw new InvalidOperationException("Нет доступа к списку заказов.");
             InitializeComponent();
             currentUser = user;
             EditBtn.Visibility = user.RoleID == 1 ? Visibility.Visible : Visibility.Collapsed;

@@ -42,7 +42,6 @@ namespace YusupovMiracle
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Sizes> Sizes { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
     }
 }
